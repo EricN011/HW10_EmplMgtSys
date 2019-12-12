@@ -12,8 +12,8 @@ CREATE TABLE employees
   (30) NOT NULL,
     lastname VARCHAR
   (30) NOT NULL,
-    role_id INT default 0,
-    manager_id INT default 0,
+    role_id INT NOT NULL,
+    manager_id INT NULL,
     PRIMARY KEY
   (id)
 );
@@ -24,8 +24,9 @@ CREATE TABLE employees
     AUTO_INCREMENT,
   title VARCHAR
     (30) NOT NULL,
-  salary DECIMAL NOT NULL,
-  department_id INT default 0,
+  salary DECIMAL
+    (10,2) NULL,
+  department_id INT NOT NULL,
   PRIMARY KEY
     (id)
 );
