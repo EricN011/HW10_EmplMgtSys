@@ -1,98 +1,98 @@
---  DELETE FROMes into the department table
-DELETE FROM department
+--  INSERT values into the department table
+INSERT INTO department
     (name)
 values
-("Noll Family");
-DELETE FROM department
+    ("Noll Family");
+INSERT INTO department
     (name)
 values
-("Moon Family");
--- DELETE FROMes into roles
+    ("Moon Family");
+-- INSERT values into roles
 -- CEOs
-DELETE FROM role
+INSERT INTO role
     (title, salary, department_id)
 values
-("Moon Husband", 100000, 1);
-DELETE FROM role
+    ("Moon Husband", 100000, 1);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Noll Husband", 100000, 2);
+    ("Noll Husband", 100000, 2);
 -- Noll Family roles
-DELETE FROM role
+INSERT INTO role
     (title, salary, department_id)
 values
-("Mother", 50000, 1);
-DELETE FROM role
+    ("Mother", 50000, 1);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Father", 500000, 1);
-DELETE FROM role
+    ("Father", 500000, 1);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Brother", 10000, 1);
-DELETE FROM role
+    ("Brother", 10000, 1);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Sister in Law", 5000, 1);
+    ("Sister in Law", 5000, 1);
 -- Moon Family roles
-DELETE FROM role
+INSERT INTO role
     (title, salary, department_id)
 values
-("Mother in Law", 50000, 2);
-DELETE FROM role
+    ("Mother in Law", 50000, 2);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Father in Law", 50000, 2);
-DELETE FROM role
+    ("Father in Law", 50000, 2);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Sister in Law", 10000, 2);
-DELETE FROM role
+    ("Sister in Law", 10000, 2);
+INSERT INTO role
     (title, salary, department_id)
 values
-("Brother in Law", 5000, 2);
+    ("Brother in Law", 5000, 2);
 
--- DELETE FROMes into employees
+-- INSERT values into employees
 -- CEOs
-DELETE FROM employee
+INSERT INTO employee
     (firstname, lastname, role_id)
 values
-("Eric", "Noll", 1);
-DELETE FROM employee
+    ("Eric", "Noll", 1);
+INSERT INTO employee
     (firstname, lastname, role_id)
 values
-("Cody", "Moon", 2);
+    ("Cody", "Moon", 2);
 -- Noll Family Employees
-DELETE FROM employee
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Melissa", "Noll", 3, 1);
-DELETE FROM employee
+    ("Melissa", "Noll", 3, 1);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Kevin", "Noll", 4, 3);
-DELETE FROM employee
+    ("Kevin", "Noll", 4, 3);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Konan", "Noll", 5, 3);
-DELETE FROM employee
+    ("Konan", "Noll", 5, 3);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Kimberly", "Noll", 6, 5);
+    ("Kimberly", "Noll", 6, 5);
 -- Moon Family Employees
-DELETE FROM employee
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Cindy", "Moon", 7, 2);
-DELETE FROM employee
+    ("Cindy", "Moon", 7, 2);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Dale", "Moon", 8, 7);
-DELETE FROM employee
+    ("Dale", "Moon", 8, 7);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Ashley", "Wilson", 9, 2);
-DELETE FROM employee
+    ("Ashley", "Wilson", 9, 2);
+INSERT INTO employee
     (firstname, lastname, role_id, manager_id)
 values
-("Ethan", "Wilson", 10, 9);
+    ("Ethan", "Wilson", 10, 9);
