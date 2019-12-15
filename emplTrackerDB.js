@@ -23,20 +23,21 @@ connection.connect(err => {
 // load prompts (main menu)
 function startSearch() {
     inquirer.prompt({
-        name: "search",
+        name: "action",
         type: "list",
         message: "What would you like to do?",
         choices:
             [
-                "View ALL Employees",
+                "View All Employees",
                 "View All Departments",
                 "View All Roles",
                 "Exit"
             ]
     }).then(function (answer) {
-        console.log(answer)
-        switch (answer.search) {
+        console.log(answer.action);
+        switch (answer.action) {
             case "View All Employees":
+                console.log("empl")
                 emplSearch();
                 break;
             case "View All Departments":
@@ -57,7 +58,7 @@ function emplSearch() {
         "SELECT * FROM empltracker_db.employee";
     connection.query(empl, (err, res) => {
         if (err) throw err;
-        console.log('in the employee')
+        console.table(res);
     })
 };
 
