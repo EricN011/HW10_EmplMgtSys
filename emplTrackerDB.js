@@ -82,20 +82,20 @@ function startSearch() {
 
 function emplAll() {
     let data = [];
-    let empl =
+    let query =
         "SELECT firstname, lastname, role.title, role.salary, department.name FROM employee INNER JOIN role ON role.id = employee.role_id INNER JOIN department ON department.id = role.department_id";
-    connection.query(empl, (err, res) => {
+    connection.query(query, (err, res) => {
         if (err) throw err;
-        res.forEach(employee => {
+        res.forEach(empl => {
             let emplInfo = [
-                `${employee.firstname} ${employee.lastname}`,
-                employee.title,
-                `${employee.salary}`,
-                employee.name,
+                `${empl.firstname} ${empl.lastname}`,
+                empl.title,
+                `$${empl.salary}.00`,
+                empl.name,
             ];
             data.push(emplInfo);
         });
-        console.table(["Name", "Title", "Salary", "Department"], data);
+        console.table(["Name", "Role", "Worth", "Family"], data);
         startSearch();
     });
 };
