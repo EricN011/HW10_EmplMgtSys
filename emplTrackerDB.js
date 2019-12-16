@@ -272,23 +272,23 @@ function createEmpl() {
                 message: "Who do you report to?",
                 choices: ["Noll Husband", "Moon Husband", "Mother", "Father", "Mother in Law", "Father in Law", "Dog", "Cat"]
             }]).then(({ firstName, lastName, role, mgrId }) => {
+                // Roles
+                (role === "Mother" ? (role = 3) :
+                    role === "Father" ? (role = 4) :
+                        role === "Mother in Law" ? (role = 7) :
+                            role === "Dog" ? (role = 14) :
+                                (role = 15));
+
                 // manager IDs
-                mgrId === "Noll Husband" ? (mgrId = 1) :
+                (mgrId === "Noll Husband" ? (mgrId = 2) :
                     mgrId === "Mother" ? (mgrId = 3) :
                         mgrId === "Father" ? (mgrId = 4) :
                             mgrId === "Mother in Law" ? (mgrId = 7) :
                                 mgrId === "Father in Law" ? (mgrId = 8) :
                                     mgrId === "Dog" ? (mgrId = 14) :
                                         mgrId === "Cat" ? (mgrId = 15) :
-                                            mgrId === "Moon Husband" ? (mgrId = 2) :
-                                                // Roles
-                                                role === "Mother" ? (role = 3) :
-                                                    role === "Father" ? (role = 4) :
-                                                        role === "Mother in Law" ? (role = 7) :
-                                                            role === "Dog" ? (role = 14) :
-                                                                role === "Cat" ? (role = 15) :
-                                                                    //Father in Law 
-                                                                    (role = 8);
+                                            (mgrId = 1));
+
 
                 inputEmpl(firstName, lastName, role, mgrId);
             });
