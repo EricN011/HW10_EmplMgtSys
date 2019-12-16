@@ -51,6 +51,26 @@ INSERT INTO role
     (title, salary, department_id)
 values
     ("Brother in Law", 5000, 2);
+INSERT INTO role
+    (title, salary, department_id)
+values
+    ("Sister", 10000, 1);
+INSERT INTO role
+    (title, salary, department_id)
+values
+    ("Nephew", 10000, 2);
+INSERT INTO role
+    (title, salary, department_id)
+values
+    ("Neice", 10000, 2);
+INSERT INTO role
+    (title, salary, department_id)
+values
+    ("Dog", 100, 2);
+INSERT INTO role
+    (title, salary, department_id)
+values
+    ("Cat", 100, 1);
 
 -- INSERT values into employees
 -- CEOs

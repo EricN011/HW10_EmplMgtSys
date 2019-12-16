@@ -53,7 +53,7 @@ function startSearch() {
                 emplMgr();
                 break;
             case "Add Employee":
-                addEmpl();
+                newEmployee();
                 break;
             case "Remove Employee":
                 deleteEmpl();
@@ -76,10 +76,11 @@ function startSearch() {
             case "Exit":
                 connection.end();
                 break;
-        }
+        };
     });
-}
+};
 
+// Search for all employees
 function emplAll() {
     let data = [];
     let query =
@@ -100,6 +101,7 @@ function emplAll() {
     });
 };
 
+// Search for all employees based on their department
 function emplDept() {
     inquirer.prompt({
         name: "deptChoice",
@@ -139,8 +141,8 @@ function emplDept() {
     });
 };
 
+// Search for all employees based on their manager
 function emplMgr() {
-
     inquirer.prompt({
         name: "mgrChoice",
         type: "list",
@@ -194,9 +196,21 @@ function emplMgr() {
     });
 };
 
-function addEmpl() {
-
+function newEmployee() {
+    inquirer.prompt({
+        type: "confirm",
+        name: "hasMgr",
+        message: "Does this person report to anyone?",
+        default: false
+    }).then(answer => {
+        if (answer.hasMgr) {
+            createEmpl();
+        } else {
+            createMgr();
+        }
+    });
 };
+
 function deleteEmpl() {
 
 };
@@ -232,3 +246,111 @@ function addRole() {
 function deleteRole() {
 
 };
+
+function createEmpl() {
+    inquirer.prompt(
+        [
+            {
+                type: "input",
+                name: "firstName",
+                message: "New Employee's first name?"
+            },
+            {
+                type: "input",
+                name: "lastName",
+                message: "New Employee's last name?"
+            },
+            {
+                type: "list",
+                name: "role",
+                message: "Select your place in the Family",
+                choices: ["Mother", "Father", "Mother in Law", "Father in Law", "Sister", "Brother", "Neice", "Nephew", "Dog", "Cat"]
+            },
+            {
+                type: "list",
+                name: "mgrId",
+                message: "Who do you report to?",
+                choices: ["Noll Husband", "Moon Husband", "Mother", "Father", "Mother in Law", "Father in Law", "Dog", "Cat"]
+            }]).then(({ firstName, lastName, role, mgrId }) => {
+                // manager IDs
+                mgrId === "Noll Husband" ? (mgrId = 1) :
+                    mgrId === "Mother" ? (mgrId = 3) :
+                        mgrId === "Father" ? (mgrId = 4) :
+                            mgrId === "Mother in Law" ? (mgrId = 7) :
+                                mgrId === "Father in Law" ? (mgrId = 8) :
+                                    mgrId === "Dog" ? (mgrId = 14) :
+                                        mgrId === "Cat" ? (mgrId = 15) :
+                                            mgrId === "Moon Husband" ? (mgrId = 2) :
+                                                // Roles
+                                                role === "Mother" ? (role = 3) :
+                                                    role === "Father" ? (role = 4) :
+                                                        role === "Mother in Law" ? (role = 7) :
+                                                            role === "Dog" ? (role = 14) :
+                                                                role === "Cat" ? (role = 15) :
+                                                                    //Father in Law 
+                                                                    (role = 8);
+
+                inputEmpl(firstName, lastName, role, mgrId);
+            });
+};
+function inputEmpl(first, last, role, Id) {
+    let query = "INSERT INTO employee SET ?";
+    connection.query(
+        query,
+        {
+            firstname: first,
+            lastname: last,
+            role_id: role,
+            manager_id: Id
+        },
+        err => {
+            if (err) throw err;
+            console.log("New Employee Added");
+        }
+    );
+}
+
+function createMgr() {
+    inquirer.prompt([
+        {
+            type: "input",
+            name: "firstName",
+            message: "New Manager's first name?"
+        },
+        {
+            type: "input",
+            name: "lastName",
+            message: "New Manager's last name?"
+        },
+        {
+            type: "list",
+            name: "role",
+            message: "Select your place in the family",
+            choices: ["Noll Husband", "Moon Husband", "Mother", "Father", "Mother in Law", "Father in Law", "Dog", "Cat"]
+        }]).then(({ firstName, lastName, role }) => {
+            role === "Noll Husband" ? (role = 1) :
+                role === "Mother" ? (role = 3) :
+                    role === "Father" ? (role = 4) :
+                        role === "Mother in Law" ? (role = 7) :
+                            role === "Father in Law" ? (role = 8) :
+                                role === "Dog" ? (role = 14) :
+                                    // Cat
+                                    (role = 15);
+            inputMgr(firstName, lastName, role);
+        });
+};
+function inputMgr(first, last, role) {
+    let query = "INSERT INTO employee SET ?";
+    connection.query(
+        query,
+        {
+            firstname: first,
+            lastname: last,
+            role_id: role,
+        },
+        err => {
+            if (err) throw err;
+            console.log("New Manager Added");
+        }
+    );
+}
