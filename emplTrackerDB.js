@@ -101,8 +101,44 @@ function emplAll() {
 };
 
 function emplDept() {
+    inquirer.prompt({
+        name: "deptChoice",
+        type: "list",
+        message: "Which family?",
+        choices: [
+            "Noll Family",
+            "Moon Family"
+        ]
+    }).then(function (answer) {
+        switch (answer.deptChoice) {
+            case "Noll Family":
+                deptChoice = "1";
+                break;
+            case "Moon Family":
+                deptChoice = "2";
+                break;
 
+        }
+        let data = [];
+        let dept = deptChoice
+        let query =
+            "SELECT firstname, lastname, role.title, role.salary, department.name FROM department INNER JOIN role ON department.id = role.department_id INNER JOIN employee ON role.id = employee.role_id WHERE department.id = ?";
+        connection.query(query, `${dept}`, (err, res) => {
+            if (err) throw err;
+            res.forEach(empl => {
+                let emplInfo = [
+                    `${empl.firstname} ${empl.lastname}`,
+                    `${empl.title}`,
+                    `$${empl.salary}.00`
+                ];
+                data.push(emplInfo);
+            });
+            console.table(["Name", "Role", "Worth"], data);
+            startSearch();
+        });
+    });
 };
+
 function emplMgr() {
 
 };
