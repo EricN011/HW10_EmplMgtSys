@@ -141,7 +141,59 @@ function emplDept() {
 
 function emplMgr() {
 
+    inquirer.prompt({
+        name: "mgrChoice",
+        type: "list",
+        message: "Who does this person report to?",
+        choices: [
+            "Eric Noll",
+            "Cody Moon",
+            "Melissa Noll",
+            "Konan Noll",
+            "Cindy Moon",
+            "Ashley Wilson"
+        ]
+    }).then(function (answer) {
+        switch (answer.mgrChoice) {
+            case "Eric Noll":
+                mgrID = "1";
+                break;
+            case "Cody Moon":
+                mgrID = "2";
+                break;
+            case "Melissa Noll":
+                mgrID = "3";
+                break;
+            case "Konan Noll":
+                mgrID = "5";
+                break;
+            case "Cindy Moon":
+                mgrID = "7";
+                break;
+            case "Ashley Wilson":
+                mgrID = "9";
+                break;
+        }
+        let data = [];
+        let manager = mgrID
+        let query =
+            "SELECT * FROM employee INNER JOIN role on role.id = employee.role_id WHERE manager_id = ?";
+        connection.query(query, `${manager}`, (err, res) => {
+            if (err) throw err;
+            res.forEach(empl => {
+                let emplInfo = [
+                    `${empl.firstname} ${empl.lastname}`,
+                    `${empl.title}`,
+                    `$${empl.salary}.00`
+                ];
+                data.push(emplInfo);
+            });
+            console.table(["Name", "Role", "Worth", "Family"], data);
+            startSearch();
+        });
+    });
 };
+
 function addEmpl() {
 
 };
