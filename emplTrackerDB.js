@@ -91,7 +91,7 @@ function emplAll() {
                 `${empl.firstname} ${empl.lastname}`,
                 empl.title,
                 `$${empl.salary}.00`,
-                empl.name,
+                empl.name
             ];
             data.push(emplInfo);
         });
@@ -100,11 +100,47 @@ function emplAll() {
     });
 };
 
+function emplDept() {
+
+};
+function emplMgr() {
+
+};
+function addEmpl() {
+
+};
+function deleteEmpl() {
+
+};
+function updateRole() {
+
+};
+function updateMgr() {
+
+};
+
 function roleAll() {
-    let role =
-        "SELECT * FROM empltracker_db.role";
-    connection.query(role, (err, res) => {
+    let data = [];
+    let query =
+        "SELECT title, role.salary, department.name FROM role INNER JOIN employee ON role.id = employee.role_id INNER JOIN department ON department.id = role.department_id";
+    connection.query(query, (err, res) => {
         if (err) throw err;
-        console.table(res)
-    })
+        res.forEach(role => {
+            let roleInfo = [
+                role.title,
+                `$${role.salary}.00`,
+                role.name
+            ];
+            data.push(roleInfo);
+        });
+        console.table(["Title", "Worth", "Family"], data);
+        startSearch();
+    });
+};
+
+function addRole() {
+
+};
+function deleteRole() {
+
 };
