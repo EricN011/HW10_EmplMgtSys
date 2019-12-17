@@ -212,10 +212,96 @@ function newEmployee() {
 };
 
 function deleteEmpl() {
-
+    let query =
+        "SELECT employee.id, employee.firstname, employee.lastname, role.title FROM employee INNER JOIN role ON role.id = employee.role_id";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "delete",
+                message: "Select an Employee to delete from the system",
+                choices: function () {
+                    let emplNames = [];
+                    res.forEach(employee => {
+                        emplNames.push(
+                            `${employee.firstname} ${employee.lastname}, ${employee.title}, ${employee.id}`
+                        );
+                    });
+                    return emplNames;
+                }
+            }
+        ]).then(answer => {
+            let choice = answer.delete;
+            let id = choice.match(/\d+/g);
+            let query = "DELETE FROM employee WHERE id = ?";
+            connection.query(query, id, (err, res) => {
+                if (err) throw err;
+                console.log("*****Employee deleted*****");
+                startSearch();
+            });
+        });
+    });
 };
 function updateRole() {
+    let query =
+        "SELECT employee.id, employee.firstname, employee.lastname, role.title FROM employee INNER JOIN role ON role.id = employee.role_id";
+    connection.query(query, (err, res) => {
+        if (err) throw err;
+        inquirer.prompt([
+            {
+                type: "list",
+                name: "updateRole",
+                message: "Select an Employee to Update his or her Role",
+                choices: function () {
+                    let emplChoice = [];
+                    res.forEach(employee => {
+                        emplChoice.push(
+                            `${employee.firstname} ${employee.lastname}, ${employee.title}, ${employee.id}`
+                        );
+                    });
+                    return emplChoice;
+                }
+            },
+            {
+                type: "list",
+                name: "role",
+                message: "Select Role to update",
+                choices: [
+                    "Mother",
+                    "Father",
+                    "Sister",
+                    "Brother",
+                    "Sister in Law",
+                    "Brother in Law",
+                    "Father in Law",
+                    "Mother in Law",
+                    "Nephew",
+                    "Neice",
+                    "Dog",
+                    "Cat"
+                ]
+            },
+        ]).then(({ updateRole, role }) => {
+            let update = updateRole;
+            let id = update.match(/\d+/g);
+            role === "Mother" ? (role = 3) :
+                role === "Father" ? (role = 4) :
+                    role === "Sister" ? (role = 11) :
+                        role === "Brother" ? (role = 5) :
+                            role === "Sister in Law" ? (role = 6) :
+                                role === "Father in Law" ? (role = 8) :
+                                    role === "Brother in Law" ? (role = 10) :
+                                        role === "Nephew" ? (role = 12) :
+                                            role === "Neice" ? (role = 13) :
+                                                role === "Dog" ? (role = 14) :
+                                                    (role = 15);
 
+            console.log("Rank", id);
+            console.log("Place in the Family", role);
+            startSearch();
+        });
+    });
 };
 function updateMgr() {
 
@@ -264,7 +350,7 @@ function createEmpl() {
                 type: "list",
                 name: "role",
                 message: "Select your place in the Family",
-                choices: ["Mother", "Father", "Mother in Law", "Father in Law", "Sister", "Brother", "Neice", "Nephew", "Dog", "Cat"]
+                choices: ["Mother", "Father", "Mother in Law", "Father in Law", "Sister", "Brother", "Sister in Law", "Brother in Law", "Neice", "Nephew", "Dog", "Cat"]
             },
             {
                 type: "list",
@@ -275,9 +361,15 @@ function createEmpl() {
                 // Roles
                 (role === "Mother" ? (role = 3) :
                     role === "Father" ? (role = 4) :
-                        role === "Mother in Law" ? (role = 7) :
-                            role === "Dog" ? (role = 14) :
-                                (role = 15));
+                        role === "Sister" ? (role = 11) :
+                            role === "Brother" ? (role = 5) :
+                                role === "Sister in Law" ? (role = 6) :
+                                    role === "Father in Law" ? (role = 8) :
+                                        role === "Brother in Law" ? (role = 10) :
+                                            role === "Nephew" ? (role = 12) :
+                                                role === "Neice" ? (role = 13) :
+                                                    role === "Dog" ? (role = 14) :
+                                                        (role = 15));
 
                 // manager IDs
                 (mgrId === "Noll Husband" ? (mgrId = 2) :
@@ -287,6 +379,7 @@ function createEmpl() {
                                 mgrId === "Father in Law" ? (mgrId = 8) :
                                     mgrId === "Dog" ? (mgrId = 14) :
                                         mgrId === "Cat" ? (mgrId = 15) :
+                                            // Moon Husband
                                             (mgrId = 1));
 
 
@@ -305,7 +398,8 @@ function inputEmpl(first, last, role, Id) {
         },
         err => {
             if (err) throw err;
-            console.log("New Employee Added");
+            console.log("*****New Employee Added*****");
+            startSearch();
         }
     );
 }
@@ -350,7 +444,8 @@ function inputMgr(first, last, role) {
         },
         err => {
             if (err) throw err;
-            console.log("New Manager Added");
+            console.log("*****New Manager Added*****");
+            startSearch();
         }
     );
 }
